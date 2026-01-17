@@ -469,17 +469,15 @@ body:hover .cursor-outline {
 .profile-img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    display: block;
+    object-fit: cover !important;
     object-position: top center;
-    /* Align to top to show hair */
     border-radius: 50%;
-    transform: scale(0.92);
-    /* Zoom out slightly to prevent corner clipping */
     transition: transform 0.5s ease;
 }
 
 .profile-img:hover {
-    transform: scale(1);
+    transform: scale(1.05);
 }
 
 .profile-image-container::before {
