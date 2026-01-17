@@ -469,8 +469,17 @@ body:hover .cursor-outline {
 .profile-img {
     width: 100%;
     height: 100%;
-    object-fit: cotain;
+    object-fit: cover;
+    object-position: top center;
+    /* Align to top to show hair */
     border-radius: 50%;
+    transform: scale(0.92);
+    /* Zoom out slightly to prevent corner clipping */
+    transition: transform 0.5s ease;
+}
+
+.profile-img:hover {
+    transform: scale(1);
 }
 
 .profile-image-container::before {
@@ -1064,4 +1073,3 @@ body:hover .cursor-outline {
         font-size: 2.5rem;
     }
 }
-
