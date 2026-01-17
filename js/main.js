@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (mobileBtn) {
         mobileBtn.addEventListener('click', () => {
             navMenu.classList.toggle('active');
-            
+
             // Toggle icon
             const icon = mobileBtn.querySelector('i');
             if (navMenu.classList.contains('active')) {
@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.addEventListener('scroll', () => {
         let current = '';
-        
+
         // Sticky Navbar background
         const navbar = document.querySelector('.navbar');
         if (window.scrollY > 50) {
@@ -104,8 +104,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     themeToggle.addEventListener('click', () => {
         const currentTheme = body.getAttribute('data-theme');
-        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-        
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
         body.setAttribute('data-theme', newTheme);
         localStorage.setItem('theme', newTheme);
         updateThemeIcon(newTheme);
@@ -132,7 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         function type() {
             const currentWord = words[wordIndex];
-            
+
             if (isDeleting) {
                 typingText.textContent = currentWord.substring(0, charIndex - 1);
                 charIndex--;
@@ -197,14 +197,14 @@ document.addEventListener('DOMContentLoaded', () => {
             // Simulate form submission
             const btn = form.querySelector('button');
             const originalText = btn.textContent;
-            
+
             btn.textContent = 'Đang gửi...';
             btn.disabled = true;
-            
+
             setTimeout(() => {
                 btn.textContent = 'Đã gửi thành công!';
                 btn.style.backgroundColor = '#10b981'; // Green
-                
+
                 setTimeout(() => {
                     form.reset();
                     btn.textContent = originalText;
@@ -214,4 +214,42 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 1500);
         });
     }
+    // Dynamic Project Previews
+    const projectCards = document.querySelectorAll('.project-card');
+
+    projectCards.forEach(card => {
+        const demoLink = card.querySelector('a.link-btn[href^="http"]'); // Find link starting with http
+        const projectImg = card.querySelector('.project-img');
+
+        // Find the specific demo link (usually the second one containing 'Demo' text or specific icon)
+        // A more robust way is to check the text content or look for the external-link icon
+        const links = card.querySelectorAll('.link-btn');
+        let actualDemoLink = null;
+
+        links.forEach(link => {
+            if (link.textContent.includes('Demo') && link.getAttribute('href') !== '#') {
+                actualDemoLink = link.getAttribute('href');
+            }
+        });
+
+        if (actualDemoLink && projectImg) {
+            // Use WordPress mshots API (Free and stable) or similar services
+            // Format: https://s0.wp.com/mshots/v1/{URL}?w={width}&h={height}
+            const screenshotUrl = `https://s0.wp.com/mshots/v1/${encodeURIComponent(actualDemoLink)}?w=600&h=400`;
+
+            // Store original src as fallback
+            const originalSrc = projectImg.src;
+
+            // Create a temporary image to test loading
+            const tempImg = new Image();
+            tempImg.onload = () => {
+                projectImg.src = screenshotUrl;
+            };
+            tempImg.onerror = () => {
+                // Keep original image if screenshot fails
+                console.warn(`Failed to load preview for ${actualDemoLink}`);
+            };
+            tempImg.src = screenshotUrl;
+        }
+    });
 });
