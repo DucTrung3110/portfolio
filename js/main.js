@@ -192,26 +192,50 @@ document.addEventListener('DOMContentLoaded', () => {
     // Form Submission
     const form = document.querySelector('.contact-form');
     if (form) {
-        form.addEventListener('submit', (e) => {
+        form.addEventListener('submit', async (e) => {
             e.preventDefault();
-            // Simulate form submission
             const btn = form.querySelector('button');
             const originalText = btn.textContent;
 
             btn.textContent = 'Đang gửi...';
             btn.disabled = true;
 
-            setTimeout(() => {
-                btn.textContent = 'Đã gửi thành công!';
-                btn.style.backgroundColor = '#10b981'; // Green
+            const formData = new FormData(form);
 
-                setTimeout(() => {
+            try {
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    btn.textContent = 'Đã gửi thành công!';
+                    btn.style.backgroundColor = '#10b981'; // Green
                     form.reset();
+                } else {
+                    const data = await response.json();
+                    if (Object.hasOwn(data, 'errors')) {
+                        btn.textContent = 'Lỗi gửi form!';
+                        console.error(data["errors"].map(error => error["message"]).join(", "));
+                    } else {
+                        btn.textContent = 'Đã có lỗi xảy ra!';
+                    }
+                    btn.style.backgroundColor = '#ef4444'; // Red
+                }
+            } catch (error) {
+                btn.textContent = 'Lỗi kết nối!';
+                btn.style.backgroundColor = '#ef4444'; // Red
+                console.error(error);
+            } finally {
+                setTimeout(() => {
                     btn.textContent = originalText;
                     btn.disabled = false;
                     btn.style.backgroundColor = '';
                 }, 3000);
-            }, 1500);
+            }
         });
     }
     // Dynamic Project Previews
