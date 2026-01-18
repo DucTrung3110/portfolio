@@ -662,7 +662,7 @@ body:hover .cursor-outline {
 }
 
 .project-image {
-    height: 200px;
+    height: 250px;
     border-radius: 12px;
     overflow: hidden;
     margin-bottom: 20px;
@@ -806,8 +806,8 @@ body:hover .cursor-outline {
 
 .timeline-item {
     position: relative;
-    width: 52%;
-    padding: 0 30px;
+    width: 50%;
+    padding: 0 15px;
     margin-bottom: 40px;
 }
 
@@ -1045,6 +1045,11 @@ body:hover .cursor-outline {
     .nav-links,
     .theme-toggle {
         display: none;
+    }
+
+    .projects-grid,
+    .achievements-grid {
+        grid-template-columns: 1fr;
     }
 
     .mobile-menu-btn {
