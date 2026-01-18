@@ -1088,6 +1088,40 @@ body:hover .cursor-outline {
         font-size: 2.5rem;
     }
 
+    /* About Section Responsive */
+    .about-text {
+        padding: 1.5rem;
+    }
+
+    .about-text p {
+        font-size: 1rem;
+        text-align: left;
+        padding: 0;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .stat-item {
+        border-right: none;
+        border-bottom: 1px solid var(--card-border);
+        padding: 15px 10px;
+    }
+
+    .stat-item:last-child {
+        border-bottom: none;
+    }
+
+    .stat-number {
+        font-size: 2rem;
+    }
+
+    .stat-label {
+        font-size: 0.9rem;
+    }
+
     /* Hide custom cursor and scroll indicator on mobile */
     .cursor-dot,
     .cursor-outline,
