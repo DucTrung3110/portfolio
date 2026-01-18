@@ -1071,7 +1071,11 @@ body:hover .cursor-outline {
     .hero-content .name {
         font-size: 2.5rem;
     }
+
+    /* Hide custom cursor and scroll indicator on mobile */
+    .cursor-dot,
+    .cursor-outline,
+    .scroll-down {
+        display: none !important;
+    }
 }
-
-
-
